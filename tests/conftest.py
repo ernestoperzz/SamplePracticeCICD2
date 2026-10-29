@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 from app.database import get_db
-from app.main import app
+from app.main import app, users #users not given in exam
 from app.models import Base
 
 TEST_DATABASE_URL = "sqlite+pysqlite://"
@@ -36,6 +36,11 @@ def reset_database():
     Base.metadata.create_all(bind=test_engine)
     yield
     Base.metadata.drop_all(bind=test_engine)
+
+#this 3 lines of code are not given in the exam
+@pytest.fixture(autouse=True) 
+def clear_users(): 
+    users.clear() 
 
 @pytest.fixture
 def client():
